@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container text-center">
+        <div class="card-dark p-5 d-inline-block shadow-lg border-accent">
+            <i class="bi bi-check-circle-fill display-1 text-success mb-4"></i>
+            <h2 class="display-6 fw-bold">Activation Successful!</h2>
+            <p class="text-secondary mb-4">Your instance <strong>{{ installation.system_id }}</strong> is now licensed
+                and active.</p>
+
+            <div class="bg-dark p-3 rounded text-start mb-4">
+                <h6 class="text-warning">License Key:</h6>
+                <code class="text-white break-all">{{ installation.license_key }}</code>
+            </div>
+
+            <p class="text-secondary small mb-4">Copy this key into a file named <code>smarty.lic</code> and place it in
+                your local server's root directory.</p>
+
+            <div class="d-flex gap-2 justify-content-center">
+                <a href="{% url 'home' %}" class="btn btn-outline-accent">Return Home</a>
+                <a href="{% url 'activate_device' %}" class="btn btn-accent">Activate Another</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

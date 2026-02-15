@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row g-5 justify-content-center">
+            <div class="col-md-6">
+                <div class="card-dark p-4 shadow-lg border-accent">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <div>
+                            <span class="badge badge-soft-accent text-uppercase">Security</span>
+                            <h4 class="mb-0 mt-2">Activate Device</h4>
+                        </div>
+                        <i class="bi bi-shield-lock display-6 text-warning"></i>
+                    </div>
+
+                    {% if error %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                    {% endif %}
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label text-secondary">Hardware ID (HWID)</label>
+                            <div class="input-shell bg-dark p-2 rounded">
+                                <i class="bi bi-cpu text-secondary me-2"></i>
+                                <input type="text" name="hwid"
+                                    class="form-control form-control-dark border-0 bg-transparent text-white"
+                                    placeholder="Copy from local server" required />
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label text-secondary">System Identifier</label>
+                            <div class="input-shell bg-dark p-2 rounded">
+                                <i class="bi bi-hdd-network text-secondary me-2"></i>
+                                <input type="text" name="system_id"
+                                    class="form-control form-control-dark border-0 bg-transparent text-white"
+                                    placeholder="e.g. server-01" required />
+                            </div>
+                        </div>
+
+                        <p class="text-secondary small mb-4">
+                            Note: Activation binds the license to your current hardware components. Any significant
+                            hardware changes may require re-activation.
+                        </p>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-accent btn-lg">Activate Now</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

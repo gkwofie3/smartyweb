@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="badge badge-soft-accent mb-2">Pricing Plans</span>
+            <h2 class="display-5 fw-bold text-white">Investment for a Smarter Future</h2>
+            <p class="text-secondary max-width-700 mx-auto">Choose the license that fits your scale. From individual
+                home installations to enterprise-wide industrial plants.</p>
+        </div>
+
+        <div class="row g-4 align-items-stretch">
+            <!-- Lite Tier -->
+            <div class="col-lg-4">
+                <div class="card-dark p-4 h-100 border-secondary position-relative overflow-hidden">
+                    <div class="mb-4">
+                        <h4 class="text-white">Smarty Lite</h4>
+                        <p class="text-secondary small">Essential local control.</p>
+                    </div>
+                    <div class="mb-4">
+                        <h2 class="display-4 fw-bold text-warning mb-0">$100</h2>
+                        <p class="text-secondary small">One-time / Perpetual License</p>
+                    </div>
+                    <ul class="list-unstyled text-secondary mb-5">
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>HWID Binding (1 Device)
+                        </li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Desktop HMI Access</li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>BACnet & Modbus IP</li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Email Notifications</li>
+                        <li class="mb-3 opacity-50"><i class="bi bi-x-circle text-danger me-2"></i>No Mobile App</li>
+                        <li class="mb-3 opacity-50"><i class="bi bi-x-circle text-danger me-2"></i>No Broker API</li>
+                    </ul>
+                    <div class="d-grid mt-auto">
+                        <a href="{% url 'contact' %}" class="btn btn-outline-accent">Purchase License</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Standard Tier -->
+            <div class="col-lg-4">
+                <div class="card-dark p-4 h-100 border-accent glow-shadow position-relative overflow-hidden">
+                    <div class="position-absolute top-0 end-0 p-3">
+                        <span class="badge bg-accent">Popular</span>
+                    </div>
+                    <div class="mb-4">
+                        <h4 class="text-white">Smarty Standard</h4>
+                        <p class="text-secondary small">For the connected professional.</p>
+                    </div>
+                    <div class="mb-4">
+                        <h2 class="display-4 fw-bold text-warning mb-0">$250</h2>
+                        <p class="text-secondary small">Per Year / Subscription</p>
+                    </div>
+                    <ul class="list-unstyled text-secondary mb-5">
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Everything in Lite</li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i><strong>Smarty Mobile
+                                App</strong></li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Smarty Broker Access</li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Telegram Alarms</li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Remote HMI Proxy</li>
+                        <li class="mb-3 opacity-50"><i class="bi bi-x-circle text-danger me-2"></i>No AI Analytics</li>
+                    </ul>
+                    <div class="d-grid mt-auto">
+                        <a href="{% url 'contact' %}" class="btn btn-accent">Upgrade to Standard</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pro Tier -->
+            <div class="col-lg-4">
+                <div class="card-dark p-4 h-100 border-secondary position-relative overflow-hidden">
+                    <div class="mb-4">
+                        <h4 class="text-white">Smarty Pro / Enterprise</h4>
+                        <p class="text-secondary small">Zero compromise automation.</p>
+                    </div>
+                    <div class="mb-4">
+                        <h2 class="display-4 fw-bold text-warning mb-0">$300</h2>
+                        <p class="text-secondary small">Per Year / Subscription</p>
+                    </div>
+                    <ul class="list-unstyled text-secondary mb-5">
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Everything in Standard
+                        </li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Priority 24/7 Support</li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i><strong>AI Trend
+                                Analysis</strong></li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Custom White-labeling</li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Scalable Redundancy</li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>On-Site Training</li>
+                    </ul>
+                    <div class="d-grid mt-auto">
+                        <a href="{% url 'contact' %}" class="btn btn-outline-accent">Contact for Enterprise</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-5 p-4 card-dark text-center border-accent glow-shadow">
+            <h5 class="text-white">Looking for Professional Integration?</h5>
+            <p class="text-secondary">Don't want to do the configuration yourself? Request **Rovid Engineers** to
+                design,
+                program, and integrate your BMS or SCADA system from start to finish.</p>
+            <div class="d-flex justify-content-center gap-3 mt-3">
+                <a href="{% url 'contact' %}" class="btn btn-accent px-4">Request Engineering Service</a>
+                <a href="{% url 'contact' %}" class="btn btn-outline-accent px-4">SI Partnership</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

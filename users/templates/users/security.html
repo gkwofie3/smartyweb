@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="card-dark p-4 sticky-top" style="top:100px;">
+                    <h4 class="fw-bold mb-4">Account Settings</h4>
+                    <div class="list-group list-group-flush">
+                        <a href="{% url 'security_settings' %}"
+                            class="list-group-item bg-transparent text-accent border-0 ps-0">
+                            <i class="bi bi-shield-lock me-2"></i> Security & 2FA
+                        </a>
+                        <a href="#" class="list-group-item bg-transparent text-secondary border-0 ps-0">
+                            <i class="bi bi-cpu me-2"></i> My Installations (Coming Soon)
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="card-dark p-4 p-md-5">
+                    <h3 class="fw-bold mb-4">Security Preferences</h3>
+
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} small mb-4" role="alert">{{ message }}</div>
+                    {% endfor %}
+                    {% endif %}
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="row g-4">
+                            <div class="col-md-12">
+                                <label class="form-label text-secondary small">Phone Number</label>
+                                <input type="text" name="phone_number" class="form-control form-control-dark"
+                                    value="{{ user.phone_number|default:'' }}" placeholder="+233...">
+                                <small class="text-secondary">Required for SMS-based authentication.</small>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label text-secondary small">Two-Factor Authentication (2FA)</label>
+                                <select name="two_fa_method" class="form-select form-select-dark">
+                                    <option value="NONE" {% if user.two_fa_method=='NONE' %}selected{% endif %}>None
+                                        (Password only)</option>
+                                    <option value="EMAIL" {% if user.two_fa_method=='EMAIL' %}selected{% endif %}>Email
+                                        (Send code to {{ user.email }})</option>
+                                    <option value="SMS" {% if user.two_fa_method=='SMS' %}selected{% endif %}>SMS (Send
+                                        code to your phone)</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 pt-4">
+                                <button type="submit" class="btn btn-accent px-5">Save Security Settings</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <hr class="my-5 border-secondary opacity-25">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="fw-bold mb-1">Update Password</h5>
+                            <p class="text-secondary small mb-0">It's a good idea to use a unique password that you
+                                don't use elsewhere.</p>
+                        </div>
+                        <a href="{% url 'password_reset' %}" class="btn btn-outline-warning btn-sm">Change Password</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

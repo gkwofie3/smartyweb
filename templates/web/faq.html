@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="badge badge-soft-accent mb-2">Support</span>
+            <h2 class="display-5 fw-bold text-white">Frequently Asked Questions</h2>
+            <p class="text-secondary max-width-700 mx-auto">Everything you need to know about the Smarty ecosystem and
+                licensing model.</p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="accordion accordion-flush faq-accordion shadow-lg" id="smartyFaq">
+                    <div class="accordion-item faq-accordion-item rounded mb-3 overflow-hidden">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed bg-dark text-white fw-semibold" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#faqSuite">
+                                What tools are included in the Smarty Suite?
+                            </button>
+                        </h2>
+                        <div id="faqSuite" class="accordion-collapse collapse" data-bs-parent="#smartyFaq">
+                            <div class="accordion-body bg-black text-secondary">
+                                The suite consists of the **Graphic Editor** (for HMIs), the **Script Program** (Python
+                                scripting),
+                                the **Functional Block Program** (logic design), the **Manager**
+                                (configuration/discovery),
+                                and the **Smarty Client** for end-user monitoring.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item faq-accordion-item rounded mb-3 overflow-hidden">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed bg-dark text-white fw-semibold" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#faqRovid">
+                                Can Rovid engineers design the system for me?
+                            </button>
+                        </h2>
+                        <div id="faqRovid" class="accordion-collapse collapse" data-bs-parent="#smartyFaq">
+                            <div class="accordion-body bg-black text-secondary">
+                                Absolutely! If you prefer a turnkey solution, our **Rovid Engineers** can handle the
+                                complete system design, programming, and on-site integration for you. Contact us for a
+                                custom quote.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item faq-accordion-item rounded mb-3 overflow-hidden">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed bg-dark text-white fw-semibold" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#faqScript">
+                                Does Smarty support custom logic and scripting?
+                            </button>
+                        </h2>
+                        <div id="faqScript" class="accordion-collapse collapse" data-bs-parent="#smartyFaq">
+                            <div class="accordion-body bg-black text-secondary">
+                                Yes. For advanced users, Smarty provides a full **Python Scripting Engine** and a
+                                **Functional Block (FBD)** editor, allowing you to create complex, stateful automation
+                                logic without being limited by fixed configurations.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item faq-accordion-item rounded mb-3 overflow-hidden">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed bg-dark text-white fw-semibold" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#faqManager">
+                                What does the Configuration Manager do?
+                            </button>
+                        </h2>
+                        <div id="faqManager" class="accordion-collapse collapse" data-bs-parent="#smartyFaq">
+                            <div class="accordion-body bg-black text-secondary">
+                                The **Configuration Manager** is the central hub for discovery and setup. It handles
+                                device scanning (BACnet, Modbus), point mapping, alarm configuration, and global
+                                licensing—all from a single desktop interface.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item faq-accordion-item rounded mb-3 overflow-hidden">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed bg-dark text-white fw-semibold" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#faqClient">
+                                How do users view the system?
+                            </button>
+                        </h2>
+                        <div id="faqClient" class="accordion-collapse collapse" data-bs-parent="#smartyFaq">
+                            <div class="accordion-body bg-black text-secondary">
+                                Users can interact with the system via the **Smarty Client** (desktop viewing software),
+                                the **Online Web Interface**, or the **Mobile App**. All interfaces provide real-time
+                                data visualization and control.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item faq-accordion-item rounded mb-3 overflow-hidden">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed bg-dark text-white fw-semibold" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#faqAI">
+                                How does the AI Assistant work?
+                            </button>
+                        </h2>
+                        <div id="faqAI" class="accordion-collapse collapse" data-bs-parent="#smartyFaq">
+                            <div class="accordion-body bg-black text-secondary">
+                                The **AI Assistant** analyzes your historical sensor data to suggest optimizations for
+                                energy efficiency and predict equipment failure. It provides natural language
+                                insights into your system's health and performance.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-5">
+                    <p class="text-secondary">Don't see your question here?</p>
+                    <a href="{% url 'contact' %}" class="btn btn-accent px-4">Contact Our Engineers</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

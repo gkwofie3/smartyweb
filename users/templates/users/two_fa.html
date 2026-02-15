@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5">
+                <div class="card-dark p-4 p-md-5 shadow-lg text-center">
+                    <div class="icon-box-large bg-soft-accent mb-4 mx-auto">
+                        <i class="bi bi-key display-4 text-accent"></i>
+                    </div>
+                    <h2 class="fw-bold mb-3">Two-Factor Auth</h2>
+                    <p class="text-secondary mb-4">Please enter the security code we just sent you to complete your
+                        login.</p>
+
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} small mb-3" role="alert">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="mb-4">
+                            <label class="form-label text-secondary small d-block">Security Code</label>
+                            <input type="text" name="code"
+                                class="form-control form-control-dark text-center fs-3 fw-bold tracking-wider" required
+                                maxlength="6" autofocus placeholder="000000">
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-accent btn-lg">Secure Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

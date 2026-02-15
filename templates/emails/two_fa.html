@@ -1,0 +1,21 @@
+{% extends 'emails/base_email.html' %}
+
+{% block subject %}Security Verification{% endblock %}
+
+{% block content %}
+<h2>Security Verification</h2>
+<p>Hello {{ user.username }},</p>
+<p>A login attempt was made for your <strong>Smarty</strong> account. To complete the login process, please enter the
+    following One-Time Password (OTP):</p>
+
+<div class="otp-box">
+    {{ otp }}
+</div>
+
+<p>This code is valid for a single use and will expire shortly.</p>
+
+<div class="info-box" style="border-left-color: #dc3545;">
+    <strong>Security Warning:</strong> If you did not initiate this login attempt, please change your password
+    immediately and contact support.
+</div>
+{% endblock %}

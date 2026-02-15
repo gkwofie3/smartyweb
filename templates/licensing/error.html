@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container text-center">
+        <div class="card-dark p-5 d-inline-block shadow-lg border-accent">
+            <i class="bi bi-exclamation-triangle-fill display-1 text-danger mb-4"></i>
+            <h2 class="display-6 fw-bold">Activation Error</h2>
+            <p class="text-secondary mb-4">{{ message|default:"An unexpected error occurred during activation." }}</p>
+
+            <div class="d-flex gap-2 justify-content-center">
+                <a href="{% url 'activate_device' %}" class="btn btn-outline-accent">Try Again</a>
+                <a href="{% url 'contact' %}" class="btn btn-accent">Contact Support</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

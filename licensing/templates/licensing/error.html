@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Activation Error{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card bg-dark border-danger text-white">
+                <div class="card-header border-danger bg-danger bg-opacity-10 text-danger fw-bold">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i> Activation Failed
+                </div>
+                <div class="card-body text-center py-5">
+                    <h5 class="card-title mb-4">We couldn't activate your license.</h5>
+                    <p class="card-text text-secondary mb-4">{{ message }}</p>
+
+                    <a href="{% url 'contact' %}" class="btn btn-outline-light">Contact Support</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

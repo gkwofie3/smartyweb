@@ -1,0 +1,17 @@
+{% extends 'emails/base_email.html' %}
+
+{% block subject %}System Alert: {{ event }}{% endblock %}
+
+{% block content %}
+<h2>System Alert: {{ event }}</h2>
+
+<div class="info-box" style="border-left-color: #ffc107;">
+    {{ details|linebreaks }}
+</div>
+
+<div style="margin-top: 30px; border-top: 1px solid #2d3238; padding-top: 20px; font-size: 13px;">
+    <p><strong>User:</strong> {{ user.username|default:user_name }}</p>
+    <p><strong>Timestamp:</strong> {% now "F j, Y, g:i a" %}</p>
+    <p><strong>Environment:</strong> Production</p>
+</div>
+{% endblock %}

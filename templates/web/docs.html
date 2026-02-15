@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row g-5">
+            <!-- Sidebar / TOC -->
+            <div class="col-lg-3">
+                <div class="card-dark p-4 sticky-top" style="top: 100px;">
+                    <h5 class="text-white mb-4">Documentation</h5>
+                    <div class="list-group list-group-flush">
+                        <a href="#quickstart"
+                            class="list-group-item bg-transparent text-secondary border-0 ps-0">Quickstart Guide</a>
+                        <a href="#hwid" class="list-group-item bg-transparent text-secondary border-0 ps-0">HWID
+                            Generation</a>
+                        <a href="#broker" class="list-group-item bg-transparent text-secondary border-0 ps-0">Broker API
+                            Setup</a>
+                        <a href="#mobile" class="list-group-item bg-transparent text-secondary border-0 ps-0">Mobile App
+                            Sync</a>
+                        <a href="#ai" class="list-group-item bg-transparent text-secondary border-0 ps-0">AI Trend
+                            Integration</a>
+                    </div>
+                    <div class="mt-4 p-3 bg-black rounded border border-secondary">
+                        <small class="text-warning">License Status:</small><br>
+                        <span class="text-success small fw-bold"><i class="bi bi-shield-check me-1"></i> Active Licensed
+                            Access</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="col-lg-9">
+                <div class="card-dark p-5 border-secondary">
+                    <h1 class="display-5 fw-bold mb-4">Mastering the Smarty Ecosystem</h1>
+                    <p class="text-secondary lead mb-5">Welcome to the technical hub. Here you'll find everything you
+                        need to deploy, secure, and scale your Smarty instances.</p>
+
+                    <div id="quickstart" class="mb-5">
+                        <h3 class="text-white">Quickstart Guide</h3>
+                        <hr class="border-secondary">
+                        <p class="text-secondary">To get started with a new Smarty installation, follow these three
+                            steps:</p>
+                        <ol class="text-secondary">
+                            <li>Download the <strong>Smarty Server Bundle</strong> from your dashboard.</li>
+                            <li>Execute <code>smarty-probe --hwid</code> to get your unique machine ID.</li>
+                            <li>Paste the ID into the <a href="{% url 'activate_device' %}"
+                                    class="text-warning">Activation Portal</a> and download your <code>smarty.lic</code>
+                                file.</li>
+                        </ol>
+                        <div class="alert alert-info bg-dark text-info border-info-subtle">
+                            <i class="bi bi-info-circle me-2"></i> Make sure your local firewall allows outbound traffic
+                            to <code>api.smartyportal.com</code> on port 443 for license validation.
+                        </div>
+                    </div>
+
+                    <div id="hwid" class="mb-5">
+                        <h3 class="text-white">Hardware Identity (HWID)</h3>
+                        <hr class="border-secondary">
+                        <p class="text-secondary">Smarty uses a SHA-256 fingerprint of the following components:</p>
+                        <ul class="text-secondary">
+                            <li>Motherboard UUID</li>
+                            <li>CPU ID (First Processor)</li>
+                            <li>Primary Disk Serial Number</li>
+                        </ul>
+                        <p class="text-secondary">If you replace more than one of these components, the activation will
+                            be voided. Standard and Pro users can self-transfer licenses once per month.</p>
+                    </div>
+
+                    <div id="broker" class="mb-5">
+                        <h3 class="text-white">Broker API Configuration</h3>
+                        <hr class="border-secondary">
+                        <p class="text-secondary">The Broker API allows your mobile device to route through our secure
+                            proxy to reach your local network. Configure your <code>settings.json</code> on the local
+                            server:</p>
+                        <pre class="bg-black p-3 rounded text-accent"><code>{
+  "system_id": "london-plant-01",
+  "broker_url": "https://api.smartyportal.com/v1/",
+  "local_port": 8443,
+  "use_proxy": true
+}</code></pre>
+                    </div>
+
+                    <section class="mt-5 pt-5 border-top border-secondary text-center">
+                        <h4 class="text-white">Need deeper technical integration?</h4>
+                        <p class="text-secondary">Our engineers are available for architecture consultation.</p>
+                        <a href="{% url 'contact' %}" class="btn btn-outline-accent">Schedule a Call</a>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
