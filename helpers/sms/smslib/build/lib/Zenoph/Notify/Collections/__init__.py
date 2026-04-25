@@ -1,1 +1,0 @@
-from Zenoph.Notify.Collections.ComposerDestinationsList import ComposerDestinationsList
