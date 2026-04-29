@@ -58,7 +58,12 @@ def register_view(request):
             "New User Registration",
             "emails/admin_alert.html",
             [settings.ADMIN_NOTIFICATION_EMAIL],
-            {'event': 'Registration', 'user': user, 'details': f"New account created for {username} ({email})"}
+            {
+                'event': 'Registration',
+                'user': user,
+                'user_name': username,
+                'details': f"New account created for {username} ({email})"
+            }
         )
             
         request.session['verify_user_id'] = user.id

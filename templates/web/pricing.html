@@ -1,108 +1,197 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Pricing – Smarty SCADA & BMS Suite{% endblock %}
+{% block meta_description %}Industrial-grade SCADA and BMS licensing from Rovid. Purpose-built for professional automation engineers. Fraction of the cost of Siemens or Schneider, full enterprise capability.{% endblock %}
+
 {% block content %}
 <section class="py-5">
     <div class="container">
         <div class="text-center mb-5">
-            <span class="badge badge-soft-accent mb-2">Pricing Plans</span>
-            <h2 class="display-5 fw-bold text-white">Investment for a Smarter Future</h2>
-            <p class="text-secondary max-width-700 mx-auto">Choose the license that fits your scale. From individual
-                home installations to enterprise-wide industrial plants.</p>
+            <span class="badge badge-soft-accent mb-2">Licensing Plans</span>
+            <h2 class="display-5 fw-bold text-white">Enterprise Power. Competitive Price.</h2>
+            <p class="text-secondary max-width-700 mx-auto">
+                Smarty delivers full industrial-grade SCADA and BMS capability at a fraction of what
+                Siemens WinCC or Schneider EcoStruxure charge. One-time perpetual options available.
+            </p>
+            <div class="d-flex justify-content-center gap-2 mt-3">
+                <span class="badge bg-success fs-6 px-3 py-2">
+                    <i class="bi bi-shield-check me-1"></i> HWID-Bound Security
+                </span>
+                <span class="badge bg-primary fs-6 px-3 py-2">
+                    <i class="bi bi-wifi me-1"></i> Online License Validation
+                </span>
+                <span class="badge bg-warning text-dark fs-6 px-3 py-2">
+                    <i class="bi bi-patch-check me-1"></i> Perpetual Options
+                </span>
+            </div>
         </div>
 
         <div class="row g-4 align-items-stretch">
-            <!-- Lite Tier -->
+
+            <!-- ── LITE ── -->
             <div class="col-lg-4">
                 <div class="card-dark p-4 h-100 border-secondary position-relative overflow-hidden">
                     <div class="mb-4">
+                        <span class="badge bg-secondary mb-2">Entry Level</span>
                         <h4 class="text-white">Smarty Lite</h4>
-                        <p class="text-secondary small">Essential local control.</p>
+                        <p class="text-secondary small">Local HMI control for single-site installations.</p>
                     </div>
-                    <div class="mb-4">
-                        <h2 class="display-4 fw-bold text-warning mb-0">$100</h2>
-                        <p class="text-secondary small">One-time / Perpetual License</p>
+                    <div class="mb-1">
+                        <h2 class="display-4 fw-bold text-warning mb-0">$1,800</h2>
+                        <p class="text-secondary small mb-0">One-time / Perpetual License</p>
+                        <p class="text-secondary small mt-1">
+                            <span class="text-muted text-decoration-line-through">Siemens equiv: ~$4,500+</span>
+                        </p>
                     </div>
+                    <hr class="border-secondary">
+                    <p class="text-secondary small fw-semibold mb-3">Included Components:</p>
                     <ul class="list-unstyled text-secondary mb-5">
-                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>HWID Binding (1 Device)
-                        </li>
-                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Desktop HMI Access</li>
-                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>BACnet & Modbus IP</li>
-                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Email Notifications</li>
-                        <li class="mb-3 opacity-50"><i class="bi bi-x-circle text-danger me-2"></i>No Mobile App</li>
-                        <li class="mb-3 opacity-50"><i class="bi bi-x-circle text-danger me-2"></i>No Broker API</li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i><strong class="text-white">Smarty Manager</strong> (Main HMI)</li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>HWID-Bound (1 Machine)</li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>BACnet &amp; Modbus IP/RTU</li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Graphic Dashboard Builder</li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Email &amp; SMS Alarms</li>
+                        <li class="mb-3 opacity-50"><i class="bi bi-x-circle text-danger me-2"></i>No Client Viewer App</li>
+                        <li class="mb-3 opacity-50"><i class="bi bi-x-circle text-danger me-2"></i>No FBD / Script Logic</li>
+                        <li class="mb-3 opacity-50"><i class="bi bi-x-circle text-danger me-2"></i>No Voice Assistant</li>
                     </ul>
                     <div class="d-grid mt-auto">
-                        <a href="{% url 'contact' %}" class="btn btn-outline-accent">Purchase License</a>
+                        <a href="/payment/checkout/?plan=LITE" class="btn btn-outline-accent">Purchase Lite License</a>
                     </div>
                 </div>
             </div>
 
-            <!-- Standard Tier -->
+            <!-- ── PRO ── -->
             <div class="col-lg-4">
                 <div class="card-dark p-4 h-100 border-accent glow-shadow position-relative overflow-hidden">
                     <div class="position-absolute top-0 end-0 p-3">
-                        <span class="badge bg-accent">Popular</span>
+                        <span class="badge bg-accent">Most Popular</span>
                     </div>
                     <div class="mb-4">
-                        <h4 class="text-white">Smarty Standard</h4>
-                        <p class="text-secondary small">For the connected professional.</p>
+                        <span class="badge bg-accent mb-2">Professional</span>
+                        <h4 class="text-white">Smarty Pro</h4>
+                        <p class="text-secondary small">For connected facilities and engineering teams.</p>
                     </div>
-                    <div class="mb-4">
-                        <h2 class="display-4 fw-bold text-warning mb-0">$250</h2>
-                        <p class="text-secondary small">Per Year / Subscription</p>
+                    <div class="mb-1">
+                        <h2 class="display-4 fw-bold text-warning mb-0">$4,500</h2>
+                        <p class="text-secondary small mb-0">Per Year / Subscription</p>
+                        <p class="text-secondary small mt-1">
+                            <span class="text-muted text-decoration-line-through">Schneider equiv: ~$10,000+/yr</span>
+                        </p>
                     </div>
+                    <hr class="border-secondary">
+                    <p class="text-secondary small fw-semibold mb-3">Included Components:</p>
                     <ul class="list-unstyled text-secondary mb-5">
                         <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Everything in Lite</li>
-                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i><strong>Smarty Mobile
-                                App</strong></li>
-                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Smarty Broker Access</li>
-                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Telegram Alarms</li>
-                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Remote HMI Proxy</li>
-                        <li class="mb-3 opacity-50"><i class="bi bi-x-circle text-danger me-2"></i>No AI Analytics</li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i><strong class="text-white">Smarty Client</strong> Viewer App</li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i><strong class="text-white">Smarty Editor</strong> (Graphic Builder)</li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Remote HMI Proxy Access</li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Telegram &amp; Mobile Alarms</li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>API Broker Access</li>
+                        <li class="mb-3 opacity-50"><i class="bi bi-x-circle text-danger me-2"></i>No FBD / Script Logic</li>
+                        <li class="mb-3 opacity-50"><i class="bi bi-x-circle text-danger me-2"></i>No Voice Assistant</li>
                     </ul>
                     <div class="d-grid mt-auto">
-                        <a href="{% url 'contact' %}" class="btn btn-accent">Upgrade to Standard</a>
+                        <a href="/payment/checkout/?plan=PRO" class="btn btn-accent">Upgrade to Pro</a>
                     </div>
                 </div>
             </div>
 
-            <!-- Pro Tier -->
+            <!-- ── ENTERPRISE ── -->
             <div class="col-lg-4">
                 <div class="card-dark p-4 h-100 border-secondary position-relative overflow-hidden">
-                    <div class="mb-4">
-                        <h4 class="text-white">Smarty Pro / Enterprise</h4>
-                        <p class="text-secondary small">Zero compromise automation.</p>
+                    <div class="position-absolute top-0 end-0 p-3">
+                        <span class="badge bg-warning text-dark">Full Suite</span>
                     </div>
                     <div class="mb-4">
-                        <h2 class="display-4 fw-bold text-warning mb-0">$300</h2>
-                        <p class="text-secondary small">Per Year / Subscription</p>
+                        <span class="badge bg-warning text-dark mb-2">Enterprise</span>
+                        <h4 class="text-white">Smarty Enterprise</h4>
+                        <p class="text-secondary small">Zero-compromise industrial automation.</p>
                     </div>
+                    <div class="mb-1">
+                        <h2 class="display-4 fw-bold text-warning mb-0">$8,500</h2>
+                        <p class="text-secondary small mb-0">Per Year / Subscription</p>
+                        <p class="text-secondary small mt-1">
+                            <span class="text-muted text-decoration-line-through">Siemens/Schneider equiv: ~$20,000+/yr</span>
+                        </p>
+                    </div>
+                    <hr class="border-secondary">
+                    <p class="text-secondary small fw-semibold mb-3">All 6 Components Included:</p>
                     <ul class="list-unstyled text-secondary mb-5">
-                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Everything in Standard
-                        </li>
-                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Priority 24/7 Support</li>
-                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i><strong>AI Trend
-                                Analysis</strong></li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Everything in Pro</li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i><strong class="text-white">Smarty FBD</strong> Logic Program</li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i><strong class="text-white">Smarty Script</strong> Editor</li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i><strong class="text-white">Smarty AI Voice</strong> Assistant</li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>AI Trend Analysis &amp; Anomaly Detection</li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Priority 24/7 Engineering Support</li>
                         <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Custom White-labeling</li>
-                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Scalable Redundancy</li>
-                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>On-Site Training</li>
+                        <li class="mb-3"><i class="bi bi-check2-circle text-success me-2"></i>On-Site Commissioning &amp; Training</li>
                     </ul>
                     <div class="d-grid mt-auto">
-                        <a href="{% url 'contact' %}" class="btn btn-outline-accent">Contact for Enterprise</a>
+                        <a href="/payment/checkout/?plan=ENTERPRISE" class="btn btn-outline-accent">Purchase Enterprise</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="mt-5 p-4 card-dark text-center border-accent glow-shadow">
-            <h5 class="text-white">Looking for Professional Integration?</h5>
-            <p class="text-secondary">Don't want to do the configuration yourself? Request **Rovid Engineers** to
-                design,
-                program, and integrate your BMS or SCADA system from start to finish.</p>
+        <!-- Component Add-ons -->
+        <div class="mt-5 p-4 card-dark border-secondary">
+            <h5 class="text-white mb-3"><i class="bi bi-puzzle me-2 text-accent"></i>Individual Component Licenses</h5>
+            <p class="text-secondary mb-4">Need only specific modules? Add them to any base license:</p>
+            <div class="row g-3">
+                {% for comp, label, price in addon_components %}
+                <div class="col-md-4">
+                    <div class="d-flex align-items-center justify-content-between p-3 rounded border border-secondary">
+                        <span class="text-white">{{ label }}</span>
+                        <span class="badge bg-accent fs-6">${{ price }}/yr</span>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-md-4">
+                    <div class="d-flex align-items-center justify-content-between p-3 rounded border border-secondary">
+                        <span class="text-white">Smarty Client Viewer</span>
+                        <span class="badge bg-accent fs-6">$900/yr</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="d-flex align-items-center justify-content-between p-3 rounded border border-secondary">
+                        <span class="text-white">Smarty Editor (Graphic)</span>
+                        <span class="badge bg-accent fs-6">$1,200/yr</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="d-flex align-items-center justify-content-between p-3 rounded border border-secondary">
+                        <span class="text-white">Smarty FBD Logic</span>
+                        <span class="badge bg-accent fs-6">$1,500/yr</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="d-flex align-items-center justify-content-between p-3 rounded border border-secondary">
+                        <span class="text-white">Smarty Script Editor</span>
+                        <span class="badge bg-accent fs-6">$1,500/yr</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="d-flex align-items-center justify-content-between p-3 rounded border border-secondary">
+                        <span class="text-white">Smarty AI Voice Assistant</span>
+                        <span class="badge bg-accent fs-6">$2,000/yr</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Engineering services CTA -->
+        <div class="mt-4 p-4 card-dark text-center border-accent glow-shadow">
+            <h5 class="text-white">Need Professional Integration?</h5>
+            <p class="text-secondary">
+                Don't want to configure it yourself? Rovid Engineers will design, program, and integrate
+                your BMS or SCADA system from start to finish — turn-key delivery.
+            </p>
             <div class="d-flex justify-content-center gap-3 mt-3">
                 <a href="{% url 'contact' %}" class="btn btn-accent px-4">Request Engineering Service</a>
-                <a href="{% url 'contact' %}" class="btn btn-outline-accent px-4">SI Partnership</a>
+                <a href="{% url 'contact' %}" class="btn btn-outline-accent px-4">SI Partnership Enquiry</a>
             </div>
         </div>
     </div>

@@ -1,59 +1,113 @@
 from django.db import models
 from django.utils import timezone
-import uuid
-
-from django.conf import settings
-
-class PricingTier(models.TextChoices):
-    LITE = 'LITE', 'Lite (Ordinary)'
-    PRO = 'PRO', 'Pro (Connected)'
-    ENTERPRISE = 'ENTERPRISE', 'Enterprise (Standard)'
-
-from django.db import models
-from django.utils import timezone
 from django.conf import settings
 import uuid
+import secrets
+import string
+
 
 class PricingTier(models.TextChoices):
-    LITE = 'LITE', 'Lite (Ordinary)'
-    PRO = 'PRO', 'Pro (Connected)'
-    ENTERPRISE = 'ENTERPRISE', 'Enterprise (Standard)'
+    LITE       = 'LITE',       'Smarty Lite'
+    PRO        = 'PRO',        'Smarty Pro'
+    ENTERPRISE = 'ENTERPRISE', 'Smarty Enterprise'
+
+
+# Components that can be individually licensed
+COMPONENT_CHOICES = [
+    ('main',   'Smarty Manager (Main)'),
+    ('client', 'Smarty Client'),
+    ('editor', 'Smarty Editor'),
+    ('fbd',    'Smarty FBD Program'),
+    ('script', 'Smarty Script Editor'),
+    ('sva',    'Smarty Voice Assistant'),
+]
+
+# Components bundled per tier
+TIER_COMPONENTS = {
+    PricingTier.LITE:       ['main'],
+    PricingTier.PRO:        ['main', 'client', 'editor'],
+    PricingTier.ENTERPRISE: ['main', 'client', 'editor', 'fbd', 'script', 'sva'],
+}
+
+
+def _generate_key():
+    """Generate a SMRT-XXXX-XXXX-XXXX-XXXX style license key."""
+    chars = string.ascii_uppercase + string.digits
+    parts = ['SMRT'] + [''.join(secrets.choice(chars) for _ in range(4)) for _ in range(4)]
+    return '-'.join(parts)
+
 
 class License(models.Model):
     """
-    Represents a product key purchased by a customer.
-    Admin generates this and assigns it to a user.
+    A product key purchased by a customer and managed by the Rovid admin.
+    Supports per-component licensing and online activation via signed tokens.
     """
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='licenses')
-    key = models.CharField(max_length=100, unique=True, help_text="The license key string (e.g. SMARTY-XXXX-YYYY)")
-    tier = models.CharField(max_length=20, choices=PricingTier.choices, default=PricingTier.LITE)
-    max_devices = models.IntegerField(default=1, help_text="Number of devices allowed on this license")
-    is_active = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    expiry_date = models.DateTimeField(null=True, blank=True)
+    user        = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='licenses'
+    )
+    key         = models.CharField(
+        max_length=64, unique=True, default=_generate_key,
+        help_text="License key (e.g. SMRT-XXXX-XXXX-XXXX-XXXX)"
+    )
+    tier        = models.CharField(
+        max_length=20, choices=PricingTier.choices, default=PricingTier.LITE
+    )
+    # Explicit component list — overrides tier defaults when set
+    components  = models.JSONField(
+        default=list, blank=True,
+        help_text="List of component IDs licensed. Leave empty to use tier defaults."
+    )
+    max_devices = models.IntegerField(default=1)
+    is_active   = models.BooleanField(default=True)
+    notes       = models.TextField(blank=True, help_text="Internal admin notes")
+    created_at  = models.DateTimeField(auto_now_add=True)
+    expiry_date = models.DateTimeField(
+        null=True, blank=True,
+        help_text="Leave blank for perpetual/lifetime license"
+    )
+
+    def get_components(self):
+        """Return the effective component list (explicit or tier-default)."""
+        if self.components:
+            return list(self.components)
+        return list(TIER_COMPONENTS.get(self.tier, ['main']))
+
+    def is_expired(self):
+        if self.expiry_date is None:
+            return False
+        return timezone.now() > self.expiry_date
+
+    def is_valid(self):
+        return self.is_active and not self.is_expired()
 
     def __str__(self):
-        return f"{self.key} ({self.tier}) - {self.user.username}"
+        return f"{self.key} [{self.tier}] – {self.user.username}"
+
 
 class Device(models.Model):
     """
-    Represents a physical hardware instance activated against a license.
+    A physical machine activated against a license.
+    Tracks heartbeat, IP, version, and revocation state.
     """
-    license = models.ForeignKey(License, on_delete=models.CASCADE, related_name='devices')
-    hardware_id = models.CharField(max_length=255, help_text="Unique Hardware ID of the local machine")
-    name = models.CharField(max_length=255, help_text="Friendly name for this device (e.g. Factory Floor 1)")
-    
-    # Connectivity Info
-    local_ip = models.GenericIPAddressField(null=True, blank=True, protocol='both', help_text="Local Network IP")
-    public_ip = models.GenericIPAddressField(null=True, blank=True, protocol='both', help_text="Public WAN IP (optional)")
-    port = models.IntegerField(default=8000, help_text="Local Port")
-    version = models.CharField(max_length=50, blank=True, null=True, help_text="Smarty Version")
+    license     = models.ForeignKey(License, on_delete=models.CASCADE, related_name='devices')
+    hardware_id = models.CharField(max_length=255)
+    name        = models.CharField(max_length=255, default='Smarty Installation')
 
-    activated_at = models.DateTimeField(auto_now_add=True)
-    last_checkin = models.DateTimeField(auto_now=True)
-    
+    # Network
+    local_ip    = models.GenericIPAddressField(null=True, blank=True, protocol='both')
+    public_ip   = models.GenericIPAddressField(null=True, blank=True, protocol='both')
+    port        = models.IntegerField(default=5000)
+    version     = models.CharField(max_length=50, blank=True, null=True)
+
+    # Lifecycle
+    activated_at    = models.DateTimeField(auto_now_add=True)
+    last_checkin    = models.DateTimeField(auto_now=True)
+    last_validated  = models.DateTimeField(null=True, blank=True)
+    is_revoked      = models.BooleanField(default=False, help_text="Revoke to force re-activation")
+
     class Meta:
         unique_together = ('license', 'hardware_id')
 
     def __str__(self):
-        return f"{self.name} ({self.hardware_id})"
+        return f"{self.name} [{self.hardware_id[:16]}...]"
+

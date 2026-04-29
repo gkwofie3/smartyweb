@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% block title %}License Activated — Smarty{% endblock %}
+
+{% block extra_css %}
+<style>
+  body { background: #0b0e1a; color: #e2e8f0; font-family: 'Inter', sans-serif; }
+  .success-wrap {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+  .card {
+    background: linear-gradient(135deg, #0f172a, #0b1e38);
+    border: 1px solid rgba(59,130,246,0.2);
+    border-radius: 20px;
+    padding: 52px 48px;
+    max-width: 620px;
+    width: 100%;
+    box-shadow: 0 0 60px rgba(59,130,246,0.12);
+  }
+  .icon-wrap {
+    width: 72px; height: 72px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 28px;
+    box-shadow: 0 0 32px rgba(16,185,129,0.4);
+    font-size: 36px;
+  }
+  h1 { text-align: center; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { text-align: center; color: #64748b; margin-bottom: 36px; font-size: 15px; }
+
+  .license-box {
+    background: #060912;
+    border: 1px solid rgba(59,130,246,0.3);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    margin-bottom: 28px;
+    position: relative;
+  }
+  .license-box label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    color: #64748b;
+    display: block;
+    margin-bottom: 10px;
+  }
+  .license-key {
+    font-family: 'Courier New', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    color: #60a5fa;
+    word-break: break-all;
+  }
+  .copy-btn {
+    position: absolute;
+    top: 12px; right: 12px;
+    background: rgba(59,130,246,0.15);
+    border: 1px solid rgba(59,130,246,0.3);
+    color: #93c5fd;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .copy-btn:hover { background: rgba(59,130,246,0.3); }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .info-item {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .info-item label { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #64748b; display: block; margin-bottom: 4px; }
+  .info-item p { font-size: 14px; color: #e2e8f0; margin: 0; }
+
+  .email-note {
+    background: rgba(16,185,129,0.08);
+    border: 1px solid rgba(16,185,129,0.2);
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 14px;
+    color: #6ee7b7;
+    margin-bottom: 28px;
+    text-align: center;
+  }
+
+  .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary, .btn-outline {
+    flex: 1;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    transition: opacity .2s;
+    display: block;
+  }
+  .btn-primary { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff; }
+  .btn-outline  { background: transparent; border: 1px solid rgba(255,255,255,0.15); color: #94a3b8; }
+  .btn-primary:hover, .btn-outline:hover { opacity: .85; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="success-wrap">
+  <div class="card">
+    <div class="icon-wrap">✓</div>
+    <h1>You're licensed!</h1>
+    <p class="subtitle">Payment successful. Your Smarty {{ order.get_plan_display }} license has been activated.</p>
+
+    <div class="license-box">
+      <label>Your License Key</label>
+      <div class="license-key" id="licKey">{{ license.key }}</div>
+      <button class="copy-btn" onclick="copyKey()">Copy</button>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-item">
+        <label>Plan</label>
+        <p>{{ order.get_plan_display }}</p>
+      </div>
+      <div class="info-item">
+        <label>Devices</label>
+        <p>Up to {{ license.max_devices }}</p>
+      </div>
+      <div class="info-item">
+        <label>Components</label>
+        <p>{{ license.get_components|join:", " }}</p>
+      </div>
+      <div class="info-item">
+        <label>Expires</label>
+        <p>{% if license.expiry_date %}{{ license.expiry_date|date:"d M Y" }}{% else %}Lifetime{% endif %}</p>
+      </div>
+    </div>
+
+    <div class="email-note">
+      📧 A copy of this license key has been sent to <strong>{{ order.email }}</strong>
+    </div>
+
+    <div class="actions">
+      <a href="/downloads/" class="btn-primary">Download Smarty Installer</a>
+      <a href="/licensing/activate-device/" class="btn-outline">My Licenses</a>
+    </div>
+  </div>
+</div>
+
+<script>
+function copyKey() {
+  const key = document.getElementById('licKey').textContent;
+  navigator.clipboard.writeText(key).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 2000);
+  });
+}
+</script>
+{% endblock %}

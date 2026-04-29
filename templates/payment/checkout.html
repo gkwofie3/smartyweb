@@ -1,0 +1,237 @@
+{% extends "base.html" %}
+{% block title %}Checkout — {{ meta.label }} | Smarty{% endblock %}
+
+{% block extra_css %}
+<style>
+  :root {
+    --accent: #3b82f6;
+    --accent-dark: #1d4ed8;
+    --success: #10b981;
+    --glass: rgba(255,255,255,0.05);
+    --border: rgba(255,255,255,0.08);
+  }
+  body { background: #0b0e1a; color: #e2e8f0; font-family: 'Inter', sans-serif; }
+
+  .checkout-wrap {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  @media (max-width: 768px) {
+    .checkout-wrap { grid-template-columns: 1fr; }
+    .plan-sidebar  { display: none; }
+  }
+
+  /* Left — plan summary */
+  .plan-sidebar {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+    padding: 60px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid var(--border);
+  }
+  .plan-badge {
+    display: inline-block;
+    background: rgba(59,130,246,0.2);
+    border: 1px solid rgba(59,130,246,0.4);
+    color: #93c5fd;
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+  .plan-price {
+    font-size: 56px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 8px;
+    background: linear-gradient(90deg, #60a5fa, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .plan-period { color: #64748b; margin-bottom: 40px; font-size: 15px; }
+  .plan-features { list-style: none; padding: 0; }
+  .plan-features li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    color: #cbd5e1;
+  }
+  .plan-features li::before { content: '✓'; color: var(--success); font-weight: 700; }
+
+  .ghs-note {
+    margin-top: 32px;
+    padding: 14px 18px;
+    background: rgba(16,185,129,0.1);
+    border: 1px solid rgba(16,185,129,0.25);
+    border-radius: 10px;
+    font-size: 13px;
+    color: #6ee7b7;
+    line-height: 1.6;
+  }
+
+  /* Right — payment form */
+  .pay-section {
+    background: #0b0e1a;
+    padding: 60px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .pay-section h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #f1f5f9;
+  }
+  .pay-section p.sub {
+    color: #64748b;
+    font-size: 14px;
+    margin-bottom: 36px;
+  }
+
+  .buyer-info {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+  }
+  .buyer-info label { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #64748b; }
+  .buyer-info p { margin: 4px 0 0; font-size: 15px; color: #e2e8f0; }
+
+  .pay-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity .2s, transform .15s;
+    box-shadow: 0 0 32px rgba(59,130,246,0.35);
+  }
+  .pay-btn:hover { opacity: .9; transform: translateY(-1px); }
+  .pay-btn:active { transform: translateY(0); }
+  .pay-btn svg { width: 22px; height: 22px; }
+
+  .secure-note {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 16px;
+    color: #475569;
+    font-size: 13px;
+  }
+  .secure-note svg { color: var(--success); }
+
+  .paystack-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 28px;
+    color: #475569;
+    font-size: 13px;
+  }
+  .paystack-logo img { height: 20px; opacity: .6; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="checkout-wrap">
+  <!-- Left: Plan Summary -->
+  <div class="plan-sidebar">
+    <span class="plan-badge">{{ plan }}</span>
+    <div class="plan-price">${{ meta.usd_amount|floatformat:"0" }}</div>
+    <div class="plan-period">{{ meta.period }}</div>
+    <ul class="plan-features">
+      {% for f in meta.features %}
+        <li>{{ f }}</li>
+      {% endfor %}
+    </ul>
+    <div class="ghs-note">
+      💱 You will be charged <strong>GHS {{ ghs_amount|floatformat:2 }}</strong>
+      (rate: 1 USD = {{ exchange_rate|floatformat:4 }} GHS, live rate)
+    </div>
+  </div>
+
+  <!-- Right: Payment -->
+  <div class="pay-section">
+    <h2>Complete your purchase</h2>
+    <p class="sub">You're one step away from unlocking Smarty {{ meta.label }}.</p>
+
+    <div class="buyer-info">
+      <label>Account</label>
+      <p>{{ request.user.get_full_name|default:request.user.username }}</p>
+      <label style="margin-top:14px;display:block;">Email (license key will be sent here)</label>
+      <p>{{ request.user.email }}</p>
+      <label style="margin-top:14px;display:block;">Order reference</label>
+      <p style="font-family:monospace;font-size:13px;color:#94a3b8">{{ order.reference }}</p>
+    </div>
+
+    <button class="pay-btn" id="payBtn" onclick="payWithPaystack()">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+      Pay GHS {{ ghs_amount|floatformat:2 }} Now
+    </button>
+
+    <p class="secure-note">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+      Secured by Paystack · 256-bit SSL encryption
+    </p>
+
+    <div class="paystack-logo">
+      <span>Powered by</span>
+      <strong style="color:#00c3f7">Paystack</strong>
+    </div>
+  </div>
+</div>
+
+<!-- Paystack Inline JS -->
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script>
+function payWithPaystack() {
+  document.getElementById('payBtn').disabled = true;
+  document.getElementById('payBtn').textContent = 'Opening payment...';
+
+  var handler = PaystackPop.setup({
+    key:       '{{ paystack_public_key }}',
+    email:     '{{ request.user.email }}',
+    amount:    {{ pesewas }},   // in pesewas
+    currency:  'GHS',
+    ref:       '{{ order.reference }}',
+    label:     'Smarty {{ meta.label }}',
+    metadata: {
+      plan:       '{{ plan }}',
+      order_ref:  '{{ order.reference }}',
+      custom_fields: [
+        { display_name: 'Plan',  variable_name: 'plan',  value: '{{ plan }}' }
+      ]
+    },
+    onClose: function() {
+      window.location.href = '/payment/cancel/?reference={{ order.reference }}';
+    },
+    callback: function(response) {
+      // Redirect to verify endpoint
+      window.location.href = '/payment/verify/?reference=' + response.reference;
+    }
+  });
+  handler.openIframe();
+}
+</script>
+{% endblock %}

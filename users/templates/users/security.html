@@ -43,11 +43,11 @@
                             <div class="col-md-12">
                                 <label class="form-label text-secondary small">Two-Factor Authentication (2FA)</label>
                                 <select name="two_fa_method" class="form-select form-select-dark">
-                                    <option value="NONE" {% if user.two_fa_method=='NONE' %}selected{% endif %}>None
+                                    <option value="NONE" {% if user.two_fa_method == 'NONE' %}selected{% endif %}>None
                                         (Password only)</option>
-                                    <option value="EMAIL" {% if user.two_fa_method=='EMAIL' %}selected{% endif %}>Email
+                                    <option value="EMAIL" {% if user.two_fa_method == 'EMAIL' %}selected{% endif %}>Email
                                         (Send code to {{ user.email }})</option>
-                                    <option value="SMS" {% if user.two_fa_method=='SMS' %}selected{% endif %}>SMS (Send
+                                    <option value="SMS" {% if user.two_fa_method == 'SMS' %}selected{% endif %}>SMS (Send
                                         code to your phone)</option>
                                 </select>
                             </div>

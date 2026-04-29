@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'licensing',
     'api',
     'users',
+    'payment',
 ]
 
 AUTH_USER_MODEL = 'users.User'
@@ -95,3 +96,19 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# ── Paystack Payment Gateway ──────────────────────────────────────────────────
+PAYSTACK_SECRET_KEY    = config('PAYSTACK_SECRET_KEY', default='')
+PAYSTACK_PUBLIC_KEY    = config('PAYSTACK_PUBLIC_KEY', default='')
+PAYSTACK_WEBHOOK_SECRET = config('PAYSTACK_WEBHOOK_SECRET', default='')
+
+# Site URL used in emails and callbacks
+SITE_URL = config('SITE_URL', default='https://smarty.rovidgh.com')
+
+# Plan prices in USD (whole dollars — displayed to user)
+# GHS equivalent is calculated live at checkout via frankfurter.app
+PLAN_PRICES_USD = {
+    'LITE':       1800,   # one-time / perpetual
+    'PRO':        4500,   # per year
+    'ENTERPRISE': 8500,   # per year
+}

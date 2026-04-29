@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Licenses – Smarty Portal{% endblock %}
+
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <div class="mb-4">
+      <h3 class="text-white fw-bold"><i class="bi bi-shield-lock-fill text-accent me-2"></i>My Licenses</h3>
+      <p class="text-secondary">Manage your Smarty installations and device activations below.</p>
+    </div>
+
+    {% if not licenses %}
+    <div class="card-dark p-5 text-center border-secondary">
+      <i class="bi bi-key fs-1 text-secondary mb-3 d-block"></i>
+      <h5 class="text-white">No Licenses Found</h5>
+      <p class="text-secondary">You don't have any Smarty licenses yet. Contact Rovid to purchase one.</p>
+      <a href="{% url 'contact' %}" class="btn btn-accent mt-2">Contact Sales</a>
+    </div>
+    {% endif %}
+
+    {% for lic in licenses %}
+    <div class="card-dark p-4 mb-4 border-{% if lic.is_valid %}accent{% else %}danger{% endif %}">
+      <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+        <div>
+          <span class="badge bg-{% if lic.tier == 'ENTERPRISE' %}warning text-dark{% elif lic.tier == 'PRO' %}accent{% else %}secondary{% endif %} mb-2">
+            {{ lic.get_tier_display }}
+          </span>
+          <h5 class="text-white font-monospace mb-1">{{ lic.key }}</h5>
+          <p class="text-secondary small mb-0">
+            {% if lic.expiry_date %}
+              Expires: <strong class="text-{% if lic.is_expired %}danger{% else %}warning{% endif %}">{{ lic.expiry_date|date:"M d, Y" }}</strong>
+            {% else %}
+              <span class="text-success"><i class="bi bi-infinity me-1"></i>Lifetime / Perpetual</span>
+            {% endif %}
+          </p>
+        </div>
+        <div class="text-end">
+          {% if lic.is_valid %}
+            <span class="badge bg-success fs-6"><i class="bi bi-check-circle me-1"></i>Active</span>
+          {% else %}
+            <span class="badge bg-danger fs-6"><i class="bi bi-x-circle me-1"></i>Inactive</span>
+          {% endif %}
+        </div>
+      </div>
+
+      <hr class="border-secondary my-3">
+
+      <!-- Components -->
+      <p class="text-secondary small fw-semibold mb-2">Licensed Components:</p>
+      <div class="d-flex flex-wrap gap-2 mb-3">
+        {% for comp in lic.get_components %}
+        <span class="badge bg-success bg-opacity-25 text-success border border-success">
+          <i class="bi bi-check2 me-1"></i>{{ comp }}
+        </span>
+        {% endfor %}
+        {% for comp in all_components %}
+          {% if comp not in lic.get_components %}
+          <span class="badge bg-secondary bg-opacity-25 text-secondary border border-secondary opacity-50">
+            <i class="bi bi-lock me-1"></i>{{ comp }}
+          </span>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <!-- Devices -->
+      <p class="text-secondary small fw-semibold mb-2">
+        Active Devices: <strong class="text-white">{{ lic.devices.count }}/{{ lic.max_devices }}</strong>
+      </p>
+      {% if lic.devices.all %}
+      <div class="table-responsive">
+        <table class="table table-dark table-sm table-bordered mb-0">
+          <thead>
+            <tr class="text-secondary small">
+              <th>Name</th><th>HWID</th><th>Local IP</th><th>Version</th><th>Last Seen</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for device in lic.devices.all %}
+            <tr class="small {% if device.is_revoked %}opacity-50{% endif %}">
+              <td class="text-white">{{ device.name }}</td>
+              <td class="font-monospace text-secondary" title="{{ device.hardware_id }}">{{ device.hardware_id|slice:":20" }}…</td>
+              <td class="text-secondary">{{ device.local_ip|default:"—" }}</td>
+              <td class="text-secondary">{{ device.version|default:"—" }}</td>
+              <td class="text-secondary">{{ device.last_checkin|timesince }} ago</td>
+              <td>
+                {% if device.is_revoked %}
+                  <span class="badge bg-danger">Revoked</span>
+                {% else %}
+                  <span class="badge bg-success">Active</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p class="text-secondary small fst-italic">No devices activated yet. Run the Smarty installer on your target machine.</p>
+      {% endif %}
+    </div>
+    {% endfor %}
+
+    <div class="mt-4 text-center">
+      <p class="text-secondary small">Need to add more devices or upgrade your plan?</p>
+      <a href="{% url 'contact' %}" class="btn btn-outline-accent">Contact Rovid Support</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

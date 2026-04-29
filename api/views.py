@@ -101,23 +101,31 @@ def heartbeat(request):
 
 def check_activation(request):
     """
-    Endpoint for local server to check its license status.
+    Legacy endpoint: local server checks its license status by HWID.
+    Kept for backward compatibility — new clients use /api/licensing/validate/ directly.
     """
     hwid = request.GET.get('hwid')
     if not hwid:
         return JsonResponse({'error': 'hwid required'}, status=400)
-        
+
     try:
-        # Check if any device matches this HWID and has an active license
-        device = Device.objects.get(hardware_id=hwid)
-        if device.license.is_active:
-             return JsonResponse({
-                'is_active': True,
-                'license_key': device.license.key,
-                'tier': device.license.tier
-            })
-        else:
-             return JsonResponse({'is_active': False, 'error': 'License expired or suspended'}, status=403)
-             
+        device = Device.objects.select_related('license').get(hardware_id=hwid)
     except Device.DoesNotExist:
-        return JsonResponse({'status': 'unregistered'}, status=404)
+        return JsonResponse({'status': 'unregistered', 'is_active': False}, status=404)
+
+    lic = device.license
+
+    if device.is_revoked:
+        return JsonResponse({'is_active': False, 'error': 'Device has been revoked.'}, status=403)
+
+    if not lic.is_valid():
+        return JsonResponse({'is_active': False, 'error': 'License expired or suspended.'}, status=403)
+
+    return JsonResponse({
+        'is_active':   True,
+        'license_key': lic.key,
+        'tier':        lic.tier,
+        'components':  lic.get_components(),
+        'expiry':      lic.expiry_date.isoformat() if lic.expiry_date else 'LIFETIME',
+        'last_validated': device.last_validated.isoformat() if device.last_validated else None,
+    })

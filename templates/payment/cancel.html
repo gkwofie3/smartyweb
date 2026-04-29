@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Payment Cancelled — Smarty{% endblock %}
+{% block content %}
+<style>
+  body { background: #0b0e1a; color: #e2e8f0; font-family: 'Inter', sans-serif; }
+  .wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px 20px; }
+  .card { background: #0f172a; border: 1px solid rgba(239,68,68,0.2); border-radius: 20px; padding: 52px 48px; max-width: 500px; width: 100%; text-align: center; }
+  .icon { font-size: 52px; margin-bottom: 20px; }
+  h1 { font-size: 26px; font-weight: 800; margin-bottom: 10px; }
+  p { color: #64748b; margin-bottom: 32px; line-height: 1.7; }
+  .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn { padding: 13px 28px; border-radius: 10px; font-size: 15px; font-weight: 600; text-decoration: none; }
+  .btn-primary { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff; }
+  .btn-outline  { border: 1px solid rgba(255,255,255,0.15); color: #94a3b8; }
+</style>
+<div class="wrap">
+  <div class="card">
+    <div class="icon">✕</div>
+    <h1>Payment Cancelled</h1>
+    <p>
+      No charge was made to your account.
+      {% if order %}Your order <strong>{{ order.reference }}</strong> has been cancelled.{% endif %}
+      {% if reason %}<br>{{ reason }}{% endif %}
+    </p>
+    <div class="actions">
+      <a href="/pricing/" class="btn btn-primary">View Plans Again</a>
+      <a href="/contact/" class="btn btn-outline">Contact Support</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

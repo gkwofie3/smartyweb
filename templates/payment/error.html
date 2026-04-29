@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Error — Smarty{% endblock %}
+{% block content %}
+<style>
+  body { background: #0b0e1a; color: #e2e8f0; font-family: 'Inter', sans-serif; }
+  .wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px 20px; }
+  .card { background: #0f172a; border: 1px solid rgba(239,68,68,0.3); border-radius: 20px; padding: 52px 48px; max-width: 500px; width: 100%; text-align: center; }
+  .icon { font-size: 52px; margin-bottom: 20px; }
+  h1 { font-size: 24px; font-weight: 800; margin-bottom: 14px; color: #fca5a5; }
+  p { color: #94a3b8; margin-bottom: 32px; line-height: 1.7; }
+  .btn { display: inline-block; padding: 13px 28px; border-radius: 10px; font-size: 15px; font-weight: 600; text-decoration: none; background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff; }
+</style>
+<div class="wrap">
+  <div class="card">
+    <div class="icon">⚠</div>
+    <h1>Something went wrong</h1>
+    <p>{{ message }}</p>
+    <a href="/contact/" class="btn">Contact Support</a>
+  </div>
+</div>
+{% endblock %}

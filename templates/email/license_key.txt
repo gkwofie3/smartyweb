@@ -1,0 +1,31 @@
+Your Smarty License Key
+=======================
+
+Hi {{ order.email }},
+
+Thank you for your purchase! Your {{ tier }} license has been created.
+
+LICENSE KEY
+-----------
+{{ license_key }}
+
+Plan:         {{ tier }}
+Components:   {{ components|join:", " }}
+Devices:      Up to {{ max_devices }}
+Expires:      {{ expiry }}
+Order Ref:    {{ order_ref }}
+Amount Paid:  ${{ usd_amount }} USD
+
+ACTIVATION INSTRUCTIONS
+------------------------
+1. Download the Smarty installer: {{ download_url }}
+2. Run the installer and enter your license key when prompted
+3. Smarty will activate automatically over the internet
+
+You can also view your license at: {{ portal_url }}
+
+Need help? Contact us at: {{ support_url }}
+
+—
+Rovid Smart Technologies
+smarty.rovidgh.com
