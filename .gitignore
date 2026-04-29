@@ -1,3 +1,4 @@
+# Django
 *.log
 *.pot
 *.pyc
@@ -5,13 +6,26 @@ __pycache__/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
+media/
 staticfiles/
+
+# Environment and Virtual Envs
 .env
-.venv
+.venv/
 env/
 venv/
 ENV/
 env.bak
 venv.bak
+
+# OS & IDE Junk
+.DS_Store
+Thumbs.db
 .vscode/
 .idea/
+.vscode/settings.json
+
+# Licensing / Paystack Keys
+*.key
+*.pem
+paystack_log.json

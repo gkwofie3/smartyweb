@@ -7,7 +7,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('licensing', '0004_license_components_device_revocation'),
+        ('licensing', '0004_device_local_ip_device_port_device_public_ip_and_more'),
     ]
 
     # Note: user FK dependency resolved dynamically via settings.AUTH_USER_MODEL
