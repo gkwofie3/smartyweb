@@ -1,13 +1,17 @@
-# Django
+# Django & Python
 *.log
 *.pot
 *.pyc
+*.pyo
+*.pyd
 __pycache__/
-local_settings.py
 db.sqlite3
 db.sqlite3-journal
 media/
 staticfiles/
+celerybeat-schedule
+celery_broker.sqlite3
+celery_results.sqlite3
 
 # Environment and Virtual Envs
 .env
@@ -15,17 +19,33 @@ staticfiles/
 env/
 venv/
 ENV/
-env.bak
-venv.bak
+*.bak
+*.swp
 
-# OS & IDE Junk
+# OS Junk
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+
+# IDEs & Editors
 .vscode/
 .idea/
-.vscode/settings.json
+*.sublime-project
+*.sublime-workspace
 
-# Licensing / Paystack Keys
+# Build & Frontend (if any)
+node_modules/
+dist/
+build/
+.cache/
+.npm/
+
+# Licensing & Keys
 *.key
 *.pem
 paystack_log.json
+license_key.txt

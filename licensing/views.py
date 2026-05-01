@@ -254,6 +254,14 @@ def validate(request):
 @csrf_exempt
 @require_POST
 def deactivate(request):
+    """
+    User-initiated deactivation (e.g. moving to a new machine).
+    Deletes the device record entirely, freeing the license slot so the
+    user can re-activate immediately on the same or a different machine.
+
+    NOTE: Admin-forced permanent revocation is done via the Django admin
+    panel by setting `is_revoked = True` on the Device record directly.
+    """
     try:
         data = json.loads(request.body)
     except (json.JSONDecodeError, ValueError):
@@ -267,9 +275,8 @@ def deactivate(request):
 
     try:
         device = Device.objects.get(license__key=key, hardware_id=hwid)
-        device.is_revoked = True
-        device.save(update_fields=['is_revoked'])
-        return JsonResponse({'ok': True, 'message': 'Device deactivated successfully.'})
+        device.delete()   # Free the slot — user can re-activate freely
+        return JsonResponse({'ok': True, 'message': 'Device deactivated successfully. You can re-activate at any time.'})
     except Device.DoesNotExist:
         return _json_err('Device not found.', status=404)
 
